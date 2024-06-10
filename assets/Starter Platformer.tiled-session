@@ -38,8 +38,8 @@
             "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1118,
-                "y": 426
+                "x": 1117,
+                "y": 425
             }
         },
         "platformer-level-1.tmj#kenny_tilemap_packed": {
@@ -56,8 +56,8 @@
             "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 342,
-                "y": 166
+                "x": 591.5,
+                "y": 349
             }
         },
         "platformer-level.tmj#PixelBackground": {
@@ -74,8 +74,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 217,
-                "y": 173
+                "x": 216.5,
+                "y": 171
             }
         },
         "platformer-level.tmx#PixelBackground": {
@@ -98,6 +98,7 @@
     "project": "Starter Platformer.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "platformer-level.tmx",
         "platformer-level-1.tmj",
         "platformer-level.tmj",
         "C:/Users/manco/OneDrive/Desktop/CMPM120/Mappy/assets/tilemap02.tmx",

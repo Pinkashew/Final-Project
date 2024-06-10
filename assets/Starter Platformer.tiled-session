@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "platformer-level.tmj",
+    "activeFile": "platformer-level-1.tmj",
     "expandedProjectPaths": [
         "."
     ],
@@ -38,13 +38,16 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": -525.5,
-                "y": 235
+                "x": 541.5,
+                "y": 233
             }
         },
         "platformer-level-1.tmj#kenny_tilemap_packed": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "platformer-level-1.tmj#tilemap-backgrounds_packed": {
+            "scaleInDock": 1
         },
         "platformer-level-1.tmx#kenny_tilemap_packed": {
             "scaleInEditor": 1
@@ -56,8 +59,8 @@
             "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 591.5,
-                "y": 349
+                "x": 1100,
+                "y": 359.5
             }
         },
         "platformer-level.tmj#PixelBackground": {
@@ -92,15 +95,15 @@
     "map.tileWidth": 18,
     "map.width": 40,
     "openFiles": [
-        "platformer-level-1.tmj",
-        "platformer-level.tmj"
+        "platformer-level.tmj",
+        "platformer-level-1.tmj"
     ],
     "project": "Starter Platformer.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "platformer-level.tmx",
-        "platformer-level-1.tmj",
         "platformer-level.tmj",
+        "platformer-level-1.tmj",
+        "platformer-level.tmx",
         "C:/Users/manco/OneDrive/Desktop/CMPM120/Mappy/assets/tilemap02.tmx",
         "C:/Users/manco/OneDrive/Desktop/CMPM120/Mappy/assets/tilemap02.json"
     ],

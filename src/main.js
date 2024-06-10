@@ -31,7 +31,7 @@ let config = {
     },
     width: 1440,
     height: 720,
-    scene: [TitleScreen, Load, Platformer, SelectLevel, Winner, Controls, SecretWinner]
+    scene: [TitleScreen, Load, Platformer, SelectLevel, Winner, Controls, SecretWinner, NextLevel]
 }
 
 var cursors;

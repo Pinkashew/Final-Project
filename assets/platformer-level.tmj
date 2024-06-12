@@ -321,6 +321,18 @@
                  "width":0,
                  "x":37,
                  "y":286
+                }, 
+                {
+                 "height":0,
+                 "id":28,
+                 "name":"TestSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2104,
+                 "y":353
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -686,7 +698,7 @@
          "y":0
         }],
  "nextlayerid":12,
- "nextobjectid":28,
+ "nextobjectid":29,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",

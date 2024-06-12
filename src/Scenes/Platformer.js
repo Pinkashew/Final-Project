@@ -52,7 +52,7 @@ class Platformer extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, 18 * 120, 40 * 18);
         // Create a new tilemap game object which uses 18x18 pixel tiles, and is
         // 45 tiles wide and 25 tiles tall.
-        this.map = this.add.tilemap("platformer-level", 18, 18, 120, 20);
+        this.map = this.add.tilemap("platformer-level", 18, 18, 120, 40);
 
         // Add a tileset to the map
         // First parameter: name we gave the tileset in Tiled

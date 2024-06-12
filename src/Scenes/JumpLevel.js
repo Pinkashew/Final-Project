@@ -1,6 +1,8 @@
-class NextLevel extends Phaser.Scene {
+class JumpLevel extends Phaser.Scene {
     constructor() {
-        super("nextLevel");
+        super("jumpLevel");
+        this.jump = this.jump.bind(this);
+        this.teleport = this.teleport.bind(this);
         this.respawn = this.respawn.bind(this);
         this.winner = this.winner.bind(this);
     }
@@ -12,60 +14,72 @@ class NextLevel extends Phaser.Scene {
         this.MAX_Y_VEL = 2000;
         this.DRAG = 2000;    // DRAG < ACCELERATION = icy slide
         this.physics.world.gravity.y = 2000;
-        this.JUMP_VELOCITY = -550;
+        this.JUMP_VELOCITY = -750;
+    }
+
+    jump() {
+        my.sprite.player.body.setVelocityY(this.JUMP_VELOCITY - 500);
+    }
+
+    winner() {
+        this.scene.start("trueWinner");
+    }
+
+    teleport() {
+        let x = Math.round(Math.random()) * 10;
+        console.log(x);
+        if (x == 10) {
+            const winner = this.map.findObject("Objects", obj => obj.name === "Winner")
+            my.sprite.player.body.x = winner.x;
+            my.sprite.player.body.y = winner.y - 50;
+        }
+        else {
+            const loser = this.map.findObject("Objects", obj => obj.name === "Loser")
+            my.sprite.player.body.x = loser.x;
+            my.sprite.player.body.y = loser.y - 50;
+        }
     }
 
     respawn() {
-        const p1Spawn = this.map.findObject("Objects", obj => obj.name === "SpawnPoint")
+        const p1Spawn = this.map.findObject("Objects", obj => obj.name === "SpawnPoint1")
         my.sprite.player.body.x = p1Spawn.x;
         my.sprite.player.body.y = p1Spawn.y - 50;
     }
 
-    winner() {
-        this.scene.start("winnerLevelV2");
-    }
 
     create() {
-        this.physics.world.setBounds(0,0, 18 * 960, 40 * 18);
-        this.cameras.main.setBounds(0, 0, 18 * 960, 40 * 18);
+        this.physics.world.setBounds(0,0, 18 * 40, 360 * 18);
+        this.cameras.main.setBounds(0, 0, 18 * 40, 360 * 18);
 
-        this.map = this.add.tilemap("platformer-level-1", 18, 18, 960, 40);
+        this.map = this.add.tilemap("platformer-level-2", 18, 18, 40, 360);
 
-        this.tileset = this.map.addTilesetImage("kenny_tilemap_packed", "tilemap_tiles");
+        this.tileset = this.map.addTilesetImage("tilemap_packed", "tilemap_tiles");
         this.background = this.map.addTilesetImage("tilemap-backgrounds_packed", "tilemap_background");
 
         this.backgroundLayer = this.map.createLayer("Background", this.background, 0, 0);
-        this.groundLayer = this.map.createLayer("Ground-n-Platforms", this.tileset, 0, 0);
-        this.grassLayer = this.map.createLayer("Background-plants", this.tileset, 0, 0);
-        this.winnerLayer = this.map.createLayer("Winner", this.tileset, 0, 0);
+        this.groundLayer = this.map.createLayer("Platforms", this.tileset, 0, 0);
+        this.bounceLayer = this.map.createLayer("Bounce", this.tileset, 0, 0);
+        this.portalLayer = this.map.createLayer("Portal", this.tileset, 0, 0);
         this.spikes = this.map.createLayer("Spike", this.tileset, 0, 0);
+        this.win = this.map.createLayer("Winner", this.tileset, 0, 0);
 
         this.groundLayer.setCollisionByProperty({
             collides: true,
         });
+        this.bounceLayer.setCollisionByProperty({
+            touch: true,
+        });
+        this.portalLayer.setCollisionByProperty({
+            touch: true,
+        });
         this.spikes.setCollisionByProperty({
             death: true,
         });
-        this.winnerLayer.setCollisionByProperty({
+        this.win.setCollisionByProperty({
             collides: true,
         });
 
         cursors = this.input.keyboard.createCursorKeys();
-
-        // debug key listener (assigned to D key)
-        this.input.keyboard.on('keydown-D', () => {
-            this.physics.world.drawDebug = this.physics.world.drawDebug ? false : true
-            this.physics.world.debugGraphic.clear()
-        }, this);
-
-        const p1Spawn = this.map.findObject("Objects", obj => obj.name === "SpawnPoint")
-        my.sprite.player = this.physics.add.sprite(p1Spawn.x, p1Spawn.y, "platformer_characters", "tile_0000.png").setScale(1)
-        // set player physics properties
-        my.sprite.player.setCollideWorldBounds(true)
-
-        this.physics.add.collider(my.sprite.player, this.groundLayer);
-        this.physics.add.collider(my.sprite.player, this.spikes, this.respawn);
-        this.physics.add.collider(my.sprite.player, this.winnerLayer, this.winner);
 
         my.vfx.walking = this.add.particles(0, 0, "kenny-particles", {
             frame: ['smoke_01.png', 'smoke_03.png'],
@@ -90,6 +104,18 @@ class NextLevel extends Phaser.Scene {
         });
         
         my.vfx.jumping.stop();
+
+        const p1Spawn = this.map.findObject("Objects", obj => obj.name === "SpawnPoint")
+        my.sprite.player = this.physics.add.sprite(p1Spawn.x, p1Spawn.y, "platformer_characters", "tile_0000.png").setScale(1)
+        // set player physics properties
+        my.sprite.player.setCollideWorldBounds(true)
+
+        this.physics.add.collider(my.sprite.player, this.groundLayer);
+        this.physics.add.collider(my.sprite.player, this.bounceLayer, this.jump);
+        this.physics.add.collider(my.sprite.player, this.groundLayer);
+        this.physics.add.collider(my.sprite.player, this.portalLayer, this.teleport);
+        this.physics.add.collider(my.sprite.player, this.spikes, this.respawn);
+        this.physics.add.collider(my.sprite.player, this.win, this.winner);
 
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.cameras.main.startFollow(my.sprite.player, true, 0.25, 0.25); // (target, [,roundPixels][,lerpX][,lerpY])

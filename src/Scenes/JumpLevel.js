@@ -18,6 +18,7 @@ class JumpLevel extends Phaser.Scene {
     }
 
     jump() {
+        this.jumpSound.play();
         my.sprite.player.body.setVelocityY(this.JUMP_VELOCITY - 500);
     }
 
@@ -63,6 +64,8 @@ class JumpLevel extends Phaser.Scene {
         this.spikes = this.map.createLayer("Spike", this.tileset, 0, 0);
         this.win = this.map.createLayer("Winner", this.tileset, 0, 0);
 
+        this.jumpSound = this.sound.add('jump');
+        
         this.groundLayer.setCollisionByProperty({
             collides: true,
         });
@@ -135,9 +138,7 @@ class JumpLevel extends Phaser.Scene {
             // Only play smoke effect if touching the ground
 
             if (my.sprite.player.body.blocked.down) {
-
                 my.vfx.walking.start();
-
             }
         } 
         
@@ -152,9 +153,7 @@ class JumpLevel extends Phaser.Scene {
             // Only play smoke effect if touching the ground
 
             if (my.sprite.player.body.blocked.down) {
-
                 my.vfx.walking.start();
-
             }
 
         } else {
